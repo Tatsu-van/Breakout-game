@@ -1,0 +1,48 @@
+canvas{
+  background-color: black;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+}
+
+.text-uppercase{
+  text-transform: uppercase;
+}
+
+.header{
+  background-color: #5bc0de;
+  height: 100px;
+  text-align: center;
+  color: white;
+}
+
+.header__title{
+  line-height: 100px;
+}
+
+.canvas_wrapper{
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.game_over{
+  font-size: 80px;
+  text-align: center;
+}
+
+.game_over{
+  margin-top: 30px;
+}
+
+.hidden{
+  opacity: 0;
+}
