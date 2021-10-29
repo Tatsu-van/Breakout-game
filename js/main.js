@@ -1,39 +1,38 @@
-let canvas = document.getElementById('canvas');
+let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
-const gameOver = document.getElementById('gameover');
+const gameOver = document.getElementById("gameover");
+const clear = document.getElementById("clear");
 
-const BALL_COLOR = 'red';
-const BALL_RADIUS = '10';
+const BALL_COLOR = "yellow";
+const BALL_RADIUS = "10";
 let ballX = canvas.width / 2;
 let ballY = canvas.height - 30;
 let xMove = 2;
 let yMove = 2;
 
-const BAR_COLOR = 'blue';
+const BAR_COLOR = "white";
 const BAR_HEIGHT = 10;
 const BAR_WIDTH = 75;
 let barX = (canvas.width - BAR_WIDTH) / 2;
 let rightKeyFlag = false;
 let leftKeyFlag = false;
 
-
-const BLOCK_COLOR = 'orange'
-const BLOCK_ROW_COUNT = 6; 
-const BLOCK_COLUMN_COUNT = 16; 
-const BLOCK_WIDTH = 50; 
-const BLOCK_HEGHT = 20; 
-const BLOCK_MARGIN = 10; 
-const BLOCK_AREA_MARGIN = 30; 
-let blockArray = []; 
-for(let i = 0; i < BLOCK_ROW_COUNT * BLOCK_COLUMN_COUNT; i++){
-  let row = Math.floor(i/BLOCK_COLUMN_COUNT);
-  let column = i - (BLOCK_COLUMN_COUNT * row); 
-  blockArray.push( {
-    x : BLOCK_AREA_MARGIN + BLOCK_MARGIN * column + BLOCK_WIDTH * column,
-    y : BLOCK_AREA_MARGIN + BLOCK_MARGIN * row +  BLOCK_HEGHT * row
-    } );
+const BLOCK_COLOR = "red";
+const BLOCK_ROW_COUNT = 6;
+const BLOCK_COLUMN_COUNT = 16;
+const BLOCK_WIDTH = 50;
+const BLOCK_HEGHT = 20;
+const BLOCK_MARGIN = 10;
+const BLOCK_AREA_MARGIN = 30;
+let blockArray = [];
+for (let i = 0; i < BLOCK_ROW_COUNT * BLOCK_COLUMN_COUNT; i++) {
+  let row = Math.floor(i / BLOCK_COLUMN_COUNT);
+  let column = i - BLOCK_COLUMN_COUNT * row;
+  blockArray.push({
+    x: BLOCK_AREA_MARGIN + BLOCK_MARGIN * column + BLOCK_WIDTH * column,
+    y: BLOCK_AREA_MARGIN + BLOCK_MARGIN * row + BLOCK_HEGHT * row,
+  });
 }
-
 
 function drawBall() {
   ballX += xMove;
@@ -43,7 +42,10 @@ function drawBall() {
   ctx.fillStyle = BALL_COLOR;
   ctx.fill();
   ctx.closePath();
-  if (ballX + xMove > canvas.width - BALL_RADIUS || ballX + xMove < BALL_RADIUS) {
+  if (
+    ballX + xMove > canvas.width - BALL_RADIUS ||
+    ballX + xMove < BALL_RADIUS
+  ) {
     xMove = -xMove;
   }
   if (ballY + yMove < BALL_RADIUS) {
@@ -52,22 +54,27 @@ function drawBall() {
     if (ballX > barX && ballX < barX + BAR_WIDTH) {
       yMove = -yMove;
     } else {
-      gameOver.classList.remove('hidden');
-      clearInterval(interval)
+      gameOver.classList.remove("hidden");
+      clearInterval(interval);
     }
   }
 }
 
 function drawBlock() {
-  blockArray = blockArray.filter( (block, index) => {
-    if (ballX > block.x && ballX < block.x + BLOCK_WIDTH && ballY > block.y && ballY < block.y + BLOCK_HEGHT) {
+  blockArray = blockArray.filter((block, index) => {
+    if (
+      ballX > block.x &&
+      ballX < block.x + BLOCK_WIDTH &&
+      ballY > block.y &&
+      ballY < block.y + BLOCK_HEGHT
+    ) {
       yMove = -yMove;
-    }else{
+    } else {
       return block;
     }
   });
-  if(blockArray.length === 0){
-    console.log('Clear');
+  if (blockArray.length === 0) {
+    clear.classList.remove("hidden");
     clearInterval(interval);
     return;
   }
@@ -119,5 +126,3 @@ function draw() {
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 let interval = setInterval(draw, 10);
-
-
